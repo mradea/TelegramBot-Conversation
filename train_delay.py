@@ -85,7 +85,6 @@ def main():
             CANCELLED: [MessageHandler(Filters.text,cancelled)],
             REASON: [MessageHandler(Filters.text, reason)]})
     dp.add_handler(conv_handler)
-    dp.add_handler(CommandHandler('help',help))
     updater.start_polling()
     updater.idle()
 
