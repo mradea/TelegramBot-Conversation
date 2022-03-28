@@ -1,12 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
-from csv import writer
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
                           ConversationHandler)
 
+#first, you'll need to create a csv file with the columns: Date, Train, Duration, Delay, Cancelled, Reason
+# this is the empty csv:
 df = pd.read_csv('Trains.csv')
-#print (df)
+print (df)
 
 ENTRY, DATE, TRAIN, DURATION, DELAY, CANCELLED, REASON = range(7)
 
@@ -20,6 +19,7 @@ def entry(update, context):
 
 def date(update, context):
     d = update.message.text
+    # store user reply as context
     context.user_data[date] = d.lower()
     update.message.reply_text('And your train was called...?')
     return TRAIN
@@ -52,6 +52,7 @@ def reason(update, context):
     rsn = update.message.text
     context.user_data[reason] = rsn.lower()
     update.message.reply_text('Thank you very much, I will now store your information...')
+    # store data as csv file using pandas
     cud = context.user_data
     data = {'Date': [f'{cud[date]}'],
             'Train': [f'{cud[train]}'],
@@ -63,14 +64,15 @@ def reason(update, context):
     new_entry.to_csv('Trains.csv', mode='a', index=False, header=False)
     df = pd.read_csv('Trains.csv')
     update.message.reply_text('Done! Thanks for participating! If you want to make a new entry, please /start the conversation.')
-    #print(df)
+    #print(df) to verify the updated csv file
     return ConversationHandler.END
 
 def main():
-    updater = Updater("5245160829:AAHRH6NoPVGUkW_H2h8tzj9eAELpIK3vR4A",
+    # you'll need to get your API token from Telegram BotFather
+    updater = Updater("Your_token",
                       use_context=True)
     dp = updater.dispatcher
-
+    #define conversation handler with entry point and message handlers
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start',start)],
         fallbacks=[],
