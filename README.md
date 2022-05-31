@@ -1,2 +1,2 @@
-# TelegramBot-TrainDelays
-Telegram Bot created with python to store information about "Deutsche Bahn"-trains
+# TelegramBot-Conversation
+Telegram Bot created with python for conversations without commands.
