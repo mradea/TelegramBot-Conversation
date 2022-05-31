@@ -6,18 +6,18 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters,
 
 NAME = range(1)
 
-def start(context, update):
+def start(update, context):
     update.message.reply_text('Hello, I am a TelegramBot! Use /chat to talk with me!')
 
-def chat(context, update):
+def chat(update, context):
     update.message.reply_text('Alright! Please tell me your name first:)')
     return NAME
   
-def name(context, update):
+def name(update, context):
     new_name = update.message.text
     context.user_data[name] = new_name
     update.message.reply_text(f'{context.user_data[name}, nice to meet you!')
-    return ConversationHandler.END
+    return ConversationHandler.END # here you define the endpoint of the conversationhandler
     
 def main():
     updater = Updater("API-token",
