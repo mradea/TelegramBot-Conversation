@@ -29,7 +29,7 @@ def main():
         fallbacks=[],
         # here you can add more states for conversation
         states={
-            NAME: [MessageHandler(Filters.txt, name)]
+            NAME: [MessageHandler(Filters.text, name)]
             })
     dp.add_handler(conv_handler)
     # command handler for /commands
